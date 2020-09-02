@@ -15,9 +15,8 @@ jobs:
             npm run test
 
   build:
-    executor:
-      name: node/default
-      tag: 12.16.0
+    docker:
+      - image: cimg/node:12.16
     steps:
       - checkout
       - run:
