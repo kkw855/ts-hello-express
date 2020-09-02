@@ -9,10 +9,10 @@ jobs:
           name: Upgrade node
           command: |
             npm install -g npm@latest
-            sudo npm cache clean -f
-            sudo npm install -g node 12.18.3
-            sudo npm install -g n
-            sudo n stable
+            npm cache clean -f
+            npm install -g node 12.18.3
+            npm install -g n
+            n stable
             node -v
       - run:
           name: Install npm dependencies
