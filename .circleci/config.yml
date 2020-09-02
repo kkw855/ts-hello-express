@@ -9,9 +9,8 @@ jobs:
       - run:
           name: Update node
           command: |
-            sudo apt-get install xz-utils -y
-            wget https://nodejs.org/dist/v12.18.3/node-v12.18.3-linux-x64.tar.xz
-            tar -C /usr/local –strip-components 1 -xJf node-v12.18.3-linux-x64.tar.xz
+            npm install -g npm@latest
+            npm install -g n 12.18.3
       - run:
           name: Install dependencies
           command: |
