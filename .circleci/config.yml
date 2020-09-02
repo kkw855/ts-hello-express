@@ -1,9 +1,8 @@
 version: 2.17
 jobs:
   test:
-    working_directory: ~/hello-sts
     docker:
-      - immage: circleci/node:8.11.1
+      - image: cimg/node:12.16
     steps:
       - checkout
       - run:
@@ -15,12 +14,4 @@ jobs:
           command: |
             npm run test
 
-workflows:
-  version: 2
-  build-deploy:
-    jobs:
-      - test:
-          filters:
-            branches:
-              only: master
 
