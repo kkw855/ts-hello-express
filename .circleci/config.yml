@@ -1,14 +1,12 @@
 version: 2.1
 jobs:
   test:
-    working_directory: ~/hello
     executor:
       name: node/default
       tag: 12.16.0
     steps:
       - checkout
       - node/install-packages:
-          app-dir: hello
           cache-path: node_modules
           override-ci-command: npm i
       - run:
