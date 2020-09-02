@@ -2,22 +2,39 @@ version: 2.1
 jobs:
   test:
     machine:
-      image: ubuntu-1604:201903-01
+      - image: ubuntu-1604:201903-01
     steps:
       - checkout
       - run:
-          name: Print version
+          name: Install dependencies
           command: |
-            node -v
-            npm -v
+            npm install
       - run:
-          name: Upgrade npm and node
+          name: Run tests
           command: |
-            curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-            sudo apt-get update
-            sleep 5
-            sudo apt-get install software-properties-common
-            sudo apt-get install nodejs=12.18.3
+            npm run test
+
+  build:
+    machine:
+      - image: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: |
+            npm run build
+
+  push:
+    machine:
+      - image: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - run:
+          name: Push image
+          command: |
+            docker build -t $DOCKERHUB_USERNAME/ts-hello-express:$CIRCLE_SHA1 .
+            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            docker push $DOCKERHUB_USERNAME/ts-hello-express:$CIRCLE_SHA1
 
 workflows:
   version: 2.1
@@ -27,4 +44,16 @@ workflows:
           filters:
             branches:
               only: master
-
+      - build:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
+      - push:
+          context: dockerhub
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
