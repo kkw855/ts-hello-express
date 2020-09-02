@@ -1,19 +1,12 @@
 version: 2.1
 jobs:
   test:
-    machine:
-      image: circleci/classic:201808-01
+    docker:
+      - image: cimg/node:12.18.3
     steps:
       - checkout
       - run:
-          name: Upgrade node
-          command: |
-            npm -v
-            sudo npm install -g n
-            sudo n 12.18.3
-            node -v
-      - run:
-          name: Install npm dependencies
+          name: Install dependencies
           command: |
             npm install
       - run:
@@ -22,20 +15,28 @@ jobs:
             npm run test
 
   build:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+      - image: cimg/node:12.18.3
     steps:
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            npm install
       - run:
           name: Build
           command: |
             npm run build
 
   push:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+      - image: buildpack-deps:trusty
     steps:
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            npm install
       - run:
           name: Push image
           command: |
