@@ -9,7 +9,6 @@ jobs:
       - run:
           name: Update node
           command: |
-            npm install -g npm@latest
             npm install -g n 12.18.3
       - run:
           name: Install dependencies
