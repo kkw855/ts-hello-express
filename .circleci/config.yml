@@ -1,8 +1,9 @@
 version: 2.1
 jobs:
   test:
-    docker:
-      - image: cimg/node:12.18.3
+    machine:
+      image: cimg/node:12.18.3
+    working_directory: ~/ts-hello-express
     steps:
       - checkout
       - run:
@@ -15,14 +16,11 @@ jobs:
             npm run test
 
   build:
-    docker:
-      - image: cimg/node:12.18.3
+    machine:
+      image: cimg/node:12.18.3
+    working_directory: ~/ts-hello-express
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            npm install
       - run:
           name: Build
           command: |
