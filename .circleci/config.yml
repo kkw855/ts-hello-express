@@ -3,7 +3,7 @@ jobs:
   test:
     docker:
       - image: cimg/node:12.18.3
-        docker_layer_caching: true
+    docker_layer_caching: true
     working_directory: ~/ts-hello-express
     steps:
       - checkout
@@ -19,7 +19,7 @@ jobs:
   build:
     docker:
       - image: cimg/node:12.18.3
-        docker_layer_caching: true
+    docker_layer_caching: true
     working_directory: ~/ts-hello-express
     steps:
       - checkout
