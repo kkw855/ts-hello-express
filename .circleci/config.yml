@@ -58,4 +58,10 @@ workflows:
           filters:
             branches:
               only: master
-
+      - push:
+          context: dockerhub
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
