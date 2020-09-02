@@ -2,7 +2,8 @@ version: 2.1
 jobs:
   test:
     machine:
-      image: cimg/node:12.16
+      docker:
+        - image: cimg/node:12.16
       docker_layer_caching: false
     working_directory: ~/hello-sts
 
