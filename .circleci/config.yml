@@ -3,7 +3,7 @@ jobs:
   test:
     working_directory: ~/hello-sts
     docker:
-      - immage: cimg/node:12.16
+      - immage: circleci/node:8.11.1
     steps:
       - checkout
       - run:
