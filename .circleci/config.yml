@@ -1,17 +1,30 @@
-version: 2.17
+version: 2.1
 jobs:
   test:
-    docker:
-      - image: cimg/node:12.16
+    working_directory: ~/hello
+    executor:
+      name: node/default
+      tag: '12.16.0'
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            npm install
+      - node/install-packages:
+          app-dir: ~/backend_api
+          cache-path: node_modules
+          override-ci-command: npm i
       - run:
           name: Run tests
           command: |
             npm run test
 
+orbs:
+  node: circleci/node@4.0.0
+
+workflows:
+  version: 2.1
+  build-deploy:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only: master
 
