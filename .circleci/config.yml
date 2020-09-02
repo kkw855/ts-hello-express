@@ -8,8 +8,8 @@ jobs:
       - run:
           name: Upgrade node
           command: |
-            npm install -g n
-            n 12.18.3
+            sudo npm install -g n
+            sudo n 12.18.3
       - run:
           name: Install npm dependencies
           command: |
