@@ -8,12 +8,8 @@ jobs:
       - run:
           name: Upgrade node
           command: |
-            curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-            npm cache clean -f
             npm install -g n
-            n stable
-            node -v
+            n 12.18.3
       - run:
           name: Install npm dependencies
           command: |
