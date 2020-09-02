@@ -8,9 +8,10 @@ jobs:
       - run:
           name: Upgrade node
           command: |
-            sudo apt-get purge --auto-remove nodejs
-            curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-            sudo apt-get install -y nodejs
+            npm install -g npm@latest
+            sudo npm cache clean -f
+            sudo npm install -g node 12.18.3
+            sudo npm install -g n
             sudo n stable
             node -v
       - run:
