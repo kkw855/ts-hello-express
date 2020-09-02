@@ -6,9 +6,14 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dependencies
+          name: Print version
           command: |
             node -v
+            npm -v
+      - run:
+          name: Upgrade npm and node
+          command: |
+            npm install -g npm@latest
 
 workflows:
   version: 2.1
