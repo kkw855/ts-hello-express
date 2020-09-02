@@ -1,9 +1,8 @@
-version: 2.1
+version: 2
 jobs:
   test:
     machine:
-      docker:
-        - image: cimg/node:12.16
+      image: cimg/node:12.16
       docker_layer_caching: false
     working_directory: ~/hello-sts
 
@@ -19,7 +18,7 @@ jobs:
             npm run test
 
 workflows:
-  version: 2.1
+  version: 2
   build-deploy:
     jobs:
       - test:
