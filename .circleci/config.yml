@@ -9,6 +9,7 @@ jobs:
       - run:
           name: Update node
           command: |
+            npm cache clean -f
             npm install -g 12.13.0
       - run:
           name: Install dependencies
