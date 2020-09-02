@@ -1,8 +1,8 @@
 version: 2.1
 jobs:
   test:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+      - image: cimg/node:12.16
     steps:
       - checkout
       - run:
@@ -15,10 +15,14 @@ jobs:
             npm run test
 
   build:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+      - image: cimg/node:12.16
     steps:
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            npm install
       - run:
           name: Build
           command: |
