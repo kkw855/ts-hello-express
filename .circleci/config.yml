@@ -7,6 +7,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Update node
+          command: |
+            npm install -g 12.13.0
+      - run:
           name: Install dependencies
           command: |
             npm install
