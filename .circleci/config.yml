@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: cimg/node:12.16
+      - image: cimg/node:12.18.3
     steps:
       - checkout
       - run:
@@ -16,7 +16,7 @@ jobs:
 
   build:
     docker:
-      - image: cimg/node:12.16
+      - image: cimg/node:12.18.3
     steps:
       - checkout
       - run:
@@ -27,6 +27,22 @@ jobs:
           name: Build
           command: |
             npm run build
+
+  push:
+    docker:
+      - image: cimg/node:12.16
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            npm install
+      - run:
+          name: Push image
+          command: |
+            docker build -t $DOCKERHUB_USERNAME/ts-hello-express:$CIRCLE_SHA1 .
+            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            docker push $DOCKERHUB_USERNAME/rsvpapp:$CIRCLE_SHA1
 
 workflows:
   version: 2.1
