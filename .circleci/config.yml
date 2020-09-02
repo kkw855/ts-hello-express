@@ -1,15 +1,17 @@
 version: 2.1
 jobs:
   test:
-    executor:
-      name: node/default
-      tag: 12.16.0
+    docker:
+      - image: cimg/node:12.16
     steps:
       - checkout
       - node/install-packages:
           cache-path: node_modules
           override-ci-command: npm i
-      - run-command: npm run test
+      - run:
+          name: Run tests
+          command: |
+            npm run test
 
   build:
     executor:
