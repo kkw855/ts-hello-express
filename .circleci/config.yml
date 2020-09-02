@@ -9,10 +9,17 @@ jobs:
       - node/install-packages:
           cache-path: node_modules
           override-ci-command: npm i
-      - run:
-          name: Run tests
-          command: |
-            npm run test
+      - run-command: npm run test
+
+  build:
+    executor:
+      name: node/default
+      tag: 12.16.0
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: node_modules
+          override-ci-command: npm i
 
 orbs:
   node: circleci/node@4.0.0
@@ -22,6 +29,12 @@ workflows:
   build-deploy:
     jobs:
       - test:
+          filters:
+            branches:
+              only: master
+      - build:
+          requires:
+            - test
           filters:
             branches:
               only: master
