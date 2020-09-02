@@ -1,48 +1,14 @@
 version: 2.1
 jobs:
   test:
-    docker:
-      - image: cimg/node:12.18.3
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-            npm install
-      - run:
-          name: Run tests
-          command: |
-            npm run test
-
-  build:
-    docker:
-      - image: cimg/node:12.18.3
-    steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            npm install
-      - run:
-          name: Build
-          command: |
-            npm run build
-
-  push:
-    docker:
-      - image: cimg/node:12.16
-    steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            npm install
-      - run:
-          name: Push image
-          command: |
-            docker build -t $DOCKERHUB_USERNAME/ts-hello-express:$CIRCLE_SHA1 .
-            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            docker push $DOCKERHUB_USERNAME/ts-hello-express:$CIRCLE_SHA1
+            node -v
 
 workflows:
   version: 2.1
@@ -52,16 +18,4 @@ workflows:
           filters:
             branches:
               only: master
-      - build:
-          requires:
-            - test
-          filters:
-            branches:
-              only: master
-      - push:
-          context: dockerhub
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+
