@@ -3,14 +3,8 @@ jobs:
   test:
     machine:
       image: ubuntu-1604:201903-01
-    working_directory: ~/ts-hello-express
     steps:
       - checkout
-      - run:
-          name: Upgrade node
-          command: |
-            curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-            sudo apt-get install -y nodejs
       - run:
           name: Install dependencies
           command: |
@@ -23,7 +17,6 @@ jobs:
   build:
     machine:
       image: ubuntu-1604:201903-01
-    working_directory: ~/ts-hello-express
     steps:
       - checkout
       - run:
