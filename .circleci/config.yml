@@ -29,8 +29,8 @@ jobs:
             npm run build
 
   push:
-    docker:
-      - image: buildpack-deps:trusty
+    machine:
+      image: circleci/classic:201808-01
     steps:
       - checkout
       - run:
