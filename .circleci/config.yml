@@ -23,5 +23,6 @@ workflows:
     jobs:
       - test:
           filters:
-            only: master
+            branches:
+              only: master
 
