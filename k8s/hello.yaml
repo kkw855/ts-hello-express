@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+        - name: hello-app
+          image: kkw855/ts-hello-express:291d4a3eae0b8d1a8123b9d513600d6efc17f5a2
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 4000
+            periodSeconds: 30
+            timeoutSeconds: 1
+            initialDelaySeconds: 50
+          env:
+            - name: MONGODB_HOST
+              value: mongodb
+          ports:
+            - containerPort: 4000
+              name: web-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello
+  labels:
+    app: hello
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: web-port
+      protocol: TCP
+  selector:
+    app: hello
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appdb: hellodb
+  template:
+    metadata:
+      labels:
+        appdb: hellodb
+    spec:
+      containers:
+        - name: hello-db
+          image: postgres:13-beta3
+          env:
+            - name: POSTGRES_USER
+              value: endsoul
+            - name: POSTGRES_PASSWORD
+              value: dnjsclr1
+            - name: POSTGRES_DB
+              value: mydb
+          ports:
+            - containerPort: 5432
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hellodb
+  labels:
+    app: hellodb
+spec:
+  ports:
+    - port: 5432
+      protocol: TCP
+  selector:
+    appdb: hellodb
